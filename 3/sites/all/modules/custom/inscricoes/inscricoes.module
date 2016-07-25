@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function inscricoes_menu() {
+  $items = array();
+
+  $items['ajax/inscricao'] = array(
+    'title' => 'Adicionar Inscricao',
+    'description' => 'Formulario para adicionar inscricao',
+    'page callback' => 'inscricoes_form_ajax',
+    'access callback' => 'user_is_anonymous',
+    'type' => MENU_CALLBACK
+  );
+
+  $items['ajax/inscricao/add'] = array(
+    'title' => 'Callback - Adicionar Inscricao',
+    'description' => 'Callback para adicionar inscricao',
+    'page callback' => 'inscricoes_add_ajax',
+    'access callback' => 'user_is_anonymous',
+    'type' => MENU_CALLBACK
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_block_info;
+ */
+function inscricoes_block_info() {
+  $blocks['botao-inscricao'] = array(
+    'info' => t('Bloco para o botão de inscrição'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view();
+ */
+function inscricoes_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'botao-inscricao':
+      $block['subject'] = '';
+      $block['content'] = '<a href="/ajax/inscricao" class="botao-inscricao">Nova Inscricao</a>';
+      break;
+  }
+
+  return $block;
+}
+
+/**
+ * Função de callback para retornar o form de adicionar inscricao
+ */
+function inscricoes_form_ajax() {
+  module_load_include('inc', 'node', 'node.pages');
+  $form = node_add('inscricao');
+  $form['actions']['submit']['value'] = 'Salvar';
+  print json_encode(array('data' => render($form)));
+  exit;
+}
+
+/**
+ * Função de callback pra salvar uma inscricao
+ */
+function inscricoes_add_ajax() {
+  if (isset($_POST) && !empty($_POST)) {
+    $node = new stdClass();
+    $node->type = 'inscricao';
+    $node->language = LANGUAGE_NONE;
+    $node->title = filter_xss($_POST['title']);
+    $node->field_sobrenome[LANGUAGE_NONE][0]['value'] = filter_xss($_POST['field_sobrenome'][LANGUAGE_NONE][0]['value']);
+    $node = node_submit($node);
+    node_save($node);
+
+    print json_encode(array('data' => true));
+  } else {
+    print json_encode(array('data' => false));
+  }
+  exit;
+}

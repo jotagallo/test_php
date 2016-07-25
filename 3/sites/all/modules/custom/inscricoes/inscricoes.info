@@ -1,0 +1,5 @@
+name = Módulo Inscrições
+description = Módulo para funcionalidade de inscrições para o teste de Drupal da MMDA"
+package = MMDA
+core = 7.x
+scripts[] = inscricoes.js
