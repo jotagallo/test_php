@@ -1,0 +1,3 @@
+imob_homepage:
+    path:     /
+    defaults: { _controller: ImobBundle:Default:index }
