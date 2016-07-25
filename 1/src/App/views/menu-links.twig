@@ -1,0 +1,14 @@
+{% for link in menu %}
+  <li class="dropdown">
+    {%if (link.href and link.title) %}
+      <a href="{{ link.href }}" class="dropdown-toggle dropdown" data-toggle="dropdown">{{ link.title }}
+        {% if link.child is defined %}<b class="caret"></b>{% endif %}
+      </a>
+    {% endif %}
+   {% if link.child is defined %}
+      <ul class="nav navbar-nav">
+        {% include "menu-links.twig" with {'menu': link.child} %}
+      </ul>
+    {% endif %}
+  </li>
+{% endfor %}
