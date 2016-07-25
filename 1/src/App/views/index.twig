@@ -2,21 +2,60 @@
 {% block title %}DefaultController::index{% endblock %}
 
 {% block content %}
-
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <h1>Teste 1 - MMDA</h1>
-        {% if menu is iterable %}
+  <nav class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+        </a>
+      </div>
+      {% if menu is iterable %}
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             {% include "menu-links.twig" with {'menu':menu} only %}
           </ul>
-        {%endif%}
+        </div>
+      {%endif%}
+    </div>
+  </nav>
+  <div class="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="page-header">
+            <h1>Teste 1<small>MMDA</small></h1>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <a href="#" class="btn btn-primary btn-lg btn-edit">Editar Menu</a>
+          <div class="btn-save-wrapper">
+            <form action="/" method="POST" id="save">
+              <input type="hidden" name="serialized" id="serialized"></input>
+              <input type="submit" class="btn btn-success btn-lg btn-save" value="Salvar Menu"></input>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container edit-area">
+
+      <div class="edit-wrapper">
+        {% if menu is iterable %}
+          <ol class="sortable ui-sortable">
+            {% include "menu-links-sortable.twig" with {'menu':menu} only %}
+          </ol>
+      {%endif%}
       </div>
     </div>
   </div>
   <!-- /.container -->
-
   <!-- jQuery -->
   <script src="js/jquery.js"></script>
 

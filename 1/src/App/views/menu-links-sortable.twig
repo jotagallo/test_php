@@ -1,0 +1,12 @@
+{% for link in menu %}
+  <li class="mjs-nestedSortable-leaf" style="display: list-item;">
+    {%if (link.href and link.title) %}
+      <div>{{ link.title }}</div>
+    {% endif %}
+   {% if link.child is defined %}
+      <ol>
+        {% include "menu-links-sortable.twig" with {'menu': link.child} %}
+      </ol>
+    {% endif %}
+  </li>
+{% endfor %}

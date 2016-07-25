@@ -9,3 +9,4 @@
  */
 
 $app->get('/', 'app.default_controller:indexAction');
+$app->post('/', 'app.default_controller:postAction');

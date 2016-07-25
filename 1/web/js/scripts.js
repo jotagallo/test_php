@@ -1,5 +1,16 @@
-$('ul.nav a.dropdown').hover(function() {
-//  $(this).next('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
-}, function() {
-//  $(this).next('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+$(document).ready(function(){
+  $('.btn-edit').click(function(){
+    $('.edit-area').show();
+    $('.btn-save-wrapper').show();
+  });
+  $('.btn-save').click(function(){
+   $('#serialized').val($('.edit-wrapper').html());
+   return true;
+  });
+  $('.sortable').nestedSortable({
+    handle: 'div',
+    items: 'li',
+    toleranceElement: '> div'
+  });
 });
+

@@ -5,6 +5,7 @@ namespace App\Controller;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use DOMDocument as DOMDocument;
 
 /**
  * DefaultController is here to help you get started.
@@ -37,9 +38,22 @@ class DefaultController {
   }
 
   public function indexAction() {
-    $this->logger->debug('Executing DefaultController::indexAction');
+    return $this->twig->render('index.twig', array('menu' => $this->getDefaultMenu()));
+  }
 
-    $menu = array(
+  public function postAction() {
+    $request = Request::createFromGlobals();
+    $string = $request->get('serialized');
+    if (!empty($string)) {
+      $dom = new DOMDocument();
+      @$dom->loadHTML($string);
+    }
+
+    print_r($dom);die;
+  }
+
+  private function getDefaultMenu() {
+    return array(
       0 => array(
         'title' => 'Home',
         'href' => '/',
@@ -101,8 +115,6 @@ class DefaultController {
         ),
       ),
     );
-
-    return $this->twig->render('index.twig', array('menu' => $menu));
   }
 
 }
