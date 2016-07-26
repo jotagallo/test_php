@@ -22,6 +22,10 @@ body {
   display:none;
 }
 
+span.close {  
+  color: #FF0000;
+}
+
 
 .mjs-nestedSortable-error {
   background: #fbe3e4;

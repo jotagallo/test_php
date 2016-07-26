@@ -1,7 +1,7 @@
 {% for link in menu %}
   <li class="mjs-nestedSortable-leaf" style="display: list-item;">
     {%if (link.href and link.title) %}
-      <div data-href="{{link.href}}">{{ link.title }}</div>
+      <div data-href="{{link.href}}">{{ link.title }}<span class="close">X</span></div>
     {% endif %}
    {% if link.child is defined %}
       <ol>

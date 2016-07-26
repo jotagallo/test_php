@@ -26,6 +26,9 @@ $(document).ready(function(){
    console.log(parseMenuArray($('.edit-wrapper ol.sortable')));
    return false;
   });
+  $('span.close').click(function(){
+    $(this).closest('li').remove();
+  });
   $('.sortable').nestedSortable({
     handle: 'div',
     items: 'li',
