@@ -5,7 +5,6 @@ namespace App\Controller;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use DOMDocument as DOMDocument;
 
 /**
  * DefaultController is here to help you get started.
@@ -44,12 +43,8 @@ class DefaultController {
   public function postAction() {
     $request = Request::createFromGlobals();
     $string = $request->get('serialized');
-    if (!empty($string)) {
-      $dom = new DOMDocument();
-      @$dom->loadHTML($string);
-    }
 
-    print_r($dom);die;
+    print_r($string);die;
   }
 
   private function getDefaultMenu() {
