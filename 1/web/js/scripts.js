@@ -1,5 +1,5 @@
 function parseMenuArray(element) {
-  var array = new Array();
+  var menu = {};
   var items = $(element).children();
   var i = 0;
   items.each(function(){
@@ -9,11 +9,22 @@ function parseMenuArray(element) {
     } else {
       obj = {'title': $(childs[0]).html(), 'href': $(childs[0]).attr('data-href')};
     }
-    array.push(obj);
+    menu[i] = obj;
     i++;
   });
 
-  return array;
+  return JSON.stringify(menu);
+}
+
+function bindSortable() {
+  $('.sortable').nestedSortable({
+    handle: 'div',
+    items: 'li',
+    toleranceElement: '> div'
+  });
+  $('span.close').click(function(){
+    $(this).closest('li').remove();
+  });
 }
 
 $(document).ready(function(){
@@ -22,16 +33,20 @@ $(document).ready(function(){
     $('.btn-save-wrapper').show();
   });
   $('.btn-save').click(function(){
-//   $('#serialized').val(parseMenuArray($('.edit-wrapper ol.sortable')));
-   console.log(parseMenuArray($('.edit-wrapper ol.sortable')));
-   return false;
+    $('span.close').each(function(){
+      $(this).remove();
+    });
+   $('#serialized').val(parseMenuArray($('.edit-wrapper ol.sortable')));
+    return true;
+   });
+
+  $('.link-add').click(function(){
+    var title = $('.link-title').val();
+    var href = $('.link-href').val();
+    var mkp = '<li class="mjs-nestedSortable-leaf" style="display: list-item;"><div data-href="/'+href+'" class="ui-sortable-handle">'+title+'<span class="close">X</span></div></li>';
+    $('.sortable').append(mkp);
+    bindSortable();
   });
-  $('span.close').click(function(){
-    $(this).closest('li').remove();
-  });
-  $('.sortable').nestedSortable({
-    handle: 'div',
-    items: 'li',
-    toleranceElement: '> div'
-  });
+
+  bindSortable();
 });

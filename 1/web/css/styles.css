@@ -9,7 +9,7 @@ body {
   height: 100px !important;
   background: url("http://www.mmda.com.br/sites/all/themes/mmda/img/sprite.png") no-repeat 0 0;
   position: absolute;
-  top:40px;
+  top:10px;
   left:20px;
 }
 
@@ -22,10 +22,19 @@ body {
   display:none;
 }
 
-span.close {  
+span.close {
   color: #FF0000;
 }
 
+.edit-area well,
+.edit-wrapper{
+  float:left;
+  width:100%;
+}
+
+.row {
+  margin-bottom:10px;
+}
 
 .mjs-nestedSortable-error {
   background: #fbe3e4;
@@ -45,7 +54,7 @@ ol.sortable, ol.sortable ol {
 }
 
 ol.sortable {
-  margin: 5em 0;
+  margin: 0.5em 0;
 }
 
 .sortable li {

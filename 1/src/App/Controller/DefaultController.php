@@ -6,19 +6,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * DefaultController is here to help you get started.
- *
- * You would probably put most of your actions in other more domain specific
- * controller classes.
- *
- * Controllers are completely separated from Silex, any dependencies should be
- * injected through the constructor. When used with a smart controller resolver,
- * the Request object can be automatically added as an argument if you use type
- * hinting.
- *
- * @author Gunnar Lium <gunnar@aptoma.com>
- */
 class DefaultController {
 
   /**
@@ -31,22 +18,54 @@ class DefaultController {
    */
   private $logger;
 
+  /**
+   * Constructor.Setup vars
+   * @param \Twig_Environment $twig
+   * @param LoggerInterface $logger
+   */
   public function __construct(\Twig_Environment $twig, LoggerInterface $logger) {
     $this->twig = $twig;
     $this->logger = $logger;
   }
 
+  /**
+   * Index action GET "/"
+   */
   public function indexAction() {
     return $this->twig->render('index.twig', array('menu' => $this->getDefaultMenu()));
   }
 
+  /**
+   * Index action POST "/"
+   */
   public function postAction() {
     $request = Request::createFromGlobals();
-    $string = $request->get('serialized');
-
-    print_r($string);die;
+    $json = json_decode($request->get('serialized'));
+    $menu = $this->objToArray($json);
+    return $this->twig->render('index.twig', array('menu' => $menu));
   }
 
+  /**
+   * Parse objects and childs into array
+   * @param type $obj
+   * @return type array
+   */
+  private function objToArray($obj) {
+    $it = is_object($obj) ? $obj : json_decode($obj);
+    $array = array();
+      foreach($it as $key => $val) {
+        if (isset($val->child)) {
+          $val->child = $this->objToArray($val->child);
+        }
+        $array[$key] = (array) $val;
+      }
+    return $array;
+  }
+
+  /**
+   * Get the defaut menu
+   * @return type array
+   */
   private function getDefaultMenu() {
     return array(
       0 => array(
