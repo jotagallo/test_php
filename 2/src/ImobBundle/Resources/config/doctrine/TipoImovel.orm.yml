@@ -1,0 +1,15 @@
+ImobBundle\Entity\TipoImovelImovel:
+    type: entity
+    table: tipos_imovel
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        nome:
+          type: string
+          length: 60
+        created:
+              type: datetime
+        updated:
+            type: datetime

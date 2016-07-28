@@ -1,0 +1,53 @@
+ImobBundle\Entity\Imovel:
+    type: entity
+    table: imoveis
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        nome:
+            type: string
+            length: 255
+        oneToOne:
+          tipo:
+              targetEntity: TipoImovel
+              joinColumn:
+                name: tipo
+                referencedColumnName: id
+        oneToMany:
+          imagens:
+              targetEntity: ImagemImovel
+              joinColumn:
+                name: imagens
+                referencedColumnName: id
+          rua:
+            type: string
+            length: 255
+        numero:
+            type: string
+            length: 60
+        cidade:
+            type: string
+            length: 60
+        estado:
+            type: text
+        descricao:
+            type: text
+        manyToMany:
+          contatos:
+            targetEntity: Contato
+            inversedBy: contatos
+            joinTable:
+              name: contatos
+              joinColumns:
+                contatos:
+                  referencedColumnName: id
+              inverseJoinColumns:
+                imoveis:
+                  referencedColumnName: imoveis
+        created:
+            type: datetime
+        updated:
+            type: datetime
+

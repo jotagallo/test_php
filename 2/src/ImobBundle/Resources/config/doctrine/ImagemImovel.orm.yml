@@ -1,0 +1,15 @@
+ImobBundle\Entity\ImagemImovel:
+    table: imagens_imovel
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+        path:
+          type: string
+          length: 255
+        emails:
+          type: text
+        created:
+            type: datetime
+        updated:
+            type: datetime

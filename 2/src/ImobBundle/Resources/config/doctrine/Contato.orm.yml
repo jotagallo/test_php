@@ -1,0 +1,30 @@
+ImobBundle\Entity\Contato:
+    table: contatos
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        nome:
+            type: string
+            length: 255
+        manyToMany:
+            contatos:
+              targetEntity: Imovel
+              inversedBy: imoveis
+              joinTable:
+                name: imoveis
+                joinColumns:
+                  contatos:
+                    referencedColumnName: id
+                inverseJoinColumns:
+                  contatos:
+                    referencedColumnName: contatos
+        telefones:
+          type: text
+        emails:
+          type: text
+        created:
+            type: datetime
+        updated:
+            type: datetime
